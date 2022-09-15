@@ -8,7 +8,7 @@
 
 ## Install
 
-```bash
+```shell
 curl -Ls https://bit.ly/podmanctl-install | bash -s -- --root
 ```
 
@@ -16,7 +16,7 @@ curl -Ls https://bit.ly/podmanctl-install | bash -s -- --root
 
 ### Usage(without install)
 
-```bash
+```shell
 bash < <(curl -Ls https://bit.ly/podmanctl)
 ```
 
@@ -24,6 +24,6 @@ bash < <(curl -Ls https://bit.ly/podmanctl)
 
 Follow install instructions, and:
 
-```bash
+```shell
 podmanctl
 ```
