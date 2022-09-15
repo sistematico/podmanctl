@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Arquivo: podmanctl
+# Descrição: Um helper para o podman usando o Linux como host
+#
+# Mais um script feito com ❤️ por: 
+# - "Lucas Saliés Brum" <lucas@archlinux.com.br>
+# 
+# Criado em:  15/09/2022 15:34:21
+# Atualizado: 15/09/2022 15:34:25
+#
+# Referência:
+# FG: reset = 0, black = 30, red = 31, green = 32, yellow = 33, blue = 34, magenta = 35, cyan = 36, white = 37
+# BG: reset = 0, black = 40, red = 41, green = 42, yellow = 43, blue = 44, magenta = 45, cyan = 46, white=47
+
+VERSION="0.0.1"
+
+if ! command -v dialog &> /dev/null; then
+  echo -e "O programa \e[1;31mdialog\e[0m não está instalado, instale-o primeiro."
+  exit
+fi
+
+test -d $HOME/.config/dialog || /usr/bin/mkdir -p $HOME/.config/dialog
+test -f $HOME/.config/dialog/vermelho.cfg || curl -s -L https://raw.githubusercontent.com/sistematico/podmanctl/main/dialog/vermelho.cfg -o $HOME/.config/dialog/vermelho.cfg
+export DIALOGRC=$HOME/.config/dialog/vermelho.cfg
+
+ACTION=$(dialog                   \
+        --stdout                  \
+        --keep-tite               \
+        --backtitle "PodmanCTL"   \
+        --title "podmanctl"       \
+        --menu 'Escolha a ação:'  \
+        0 0 0                     \
+        1 'Listar imagens'        \
+        2 'Criar imagem'          \
+        3 'Editar imagem'         )
+
+[ $? -ne 0 ] && exit
+
+echo -e "\n\e[1;31mW.I.P.\e[0m\n\nPlease Wait!\n"
+
