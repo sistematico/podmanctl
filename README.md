@@ -14,6 +14,16 @@ curl -Ls https://bit.ly/podmanctl-install | bash -s -- --root
 
 ## Usage
 
+### Usage(without install)
+
 ```bash
-curl -Ls https://bit.ly/podmanctl | bash
+bash < <(curl -Ls https://bit.ly/podmanctl)
+```
+
+### Usage(with install)
+
+Follow install instructions, and:
+
+```bash
+podmanctl
 ```
