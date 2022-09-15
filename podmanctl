@@ -14,15 +14,26 @@
 # BG: reset = 0, black = 40, red = 41, green = 42, yellow = 43, blue = 44, magenta = 45, cyan = 46, white=47
 
 VERSION="0.0.1"
+TEMPLATE="/tmp/Dockerfile.tpl"
+OUTPUT="Dockerfile"
 
-if ! command -v dialog &> /dev/null; then
-  echo -e "O programa \e[1;31mdialog\e[0m não está instalado, instale-o primeiro."
-  exit
-fi
+apps=( podman dialog )
+for app in ${apps[@]}; do
+  if ! command -v $app &> /dev/null; then
+    echo -e "O programa \e[1;31m${app}\e[0m não está instalado, instale-o primeiro."
+    exit
+  fi
+done
 
 test -d $HOME/.config/dialog || /usr/bin/mkdir -p $HOME/.config/dialog
 test -f $HOME/.config/dialog/vermelho.cfg || curl -s -L https://raw.githubusercontent.com/sistematico/podmanctl/main/dialog/vermelho.cfg -o $HOME/.config/dialog/vermelho.cfg
 export DIALOGRC=$HOME/.config/dialog/vermelho.cfg
+
+make_image() {
+  curl -sLo $TEMPLATE https://raw.githubusercontent.com/sistematico/podmanctl/main/tpl/Dockerfile
+  #sed -e "s|VARONE|NEWVALA|g" -e "s|VARTWO|NEWVALB|g" -e "s|VARTHR|NEWVALC|g" < $TEMPLATE > $OUTPUT
+  sed -e "s|{IMAGE_OS}|$1|g" < $TEMPLATE > $OUTPUT
+}
 
 ACTION=$(dialog                   \
         --stdout                  \
@@ -39,3 +50,4 @@ ACTION=$(dialog                   \
 
 echo -e "\n\e[1;31mW.I.P.\e[0m\n\nPlease Wait!\n"
 
+make_image "alpine"
